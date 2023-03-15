@@ -12,7 +12,11 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-driver = webdriver.Chrome('C:\chromedriver\chromedriver.exe')
+#Windows
+#driver = webdriver.Chrome('C:\chromedriver\chromedriver.exe')
+
+#Mac
+driver = webdriver.Chrome('/Users/karol/Developer/chromedriver_mac_arm64/chromedriver')
 
 
 def login_process(username, password):
@@ -42,25 +46,28 @@ def login_error_test(error_message, username, password="secret_sauce"):
 logger.info('Starting tests...')
 
 login_test("standard_user")
-logger.info("Test 1: positive")
+logger.info("Standard user test: positive")
 
 login_test("problem_user")
-logger.info("Test 2: positive")
+logger.info("Problem user test: positive")
 
 login_test("performance_glitch_user")
-logger.info("Test 3: positive")
+logger.info("Performance glitch user test: positive")
 
 login_error_test("Epic sadface: Username is required", "")
-logger.info("Test 4: positive")
+logger.info("No login test: positive")
+
+login_error_test("Epic sadface: Username is required", "", "")
+logger.info("No credentials test: positive")
 
 login_error_test("Epic sadface: Password is required", "standard_user", "")
-logger.info("Test 5: positive")
+logger.info("No password test: positive")
 
 login_error_test("Epic sadface: Username and password do not match any user in this service", "non_existing_user")
-logger.info("Test 6: positive")
+logger.info("Non-existing user test: positive")
 
 login_error_test("Epic sadface: Sorry, this user has been locked out.", "locked_out_user")
-logger.info("Test 7: positive")
+logger.info("Locked out user test: positive")
 
 logger.info('Tests finished.')
 
